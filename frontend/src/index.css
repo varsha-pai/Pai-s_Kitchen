@@ -1,0 +1,289 @@
+@import "tailwindcss";
+
+/* 
+  Pai's Kawaii Kitchen Theme
+  A funky, cute, food-sticker style layout with custom animations and warm pastel vibes.
+*/
+
+:root {
+  --bg-cream: #fffdf5;
+  --text-dark: #2c2520;
+  --border-dark: #2c2520;
+  
+  /* Kawaii Colors */
+  --strawberry: #ff6b6b;
+  --strawberry-light: #ffe3e3;
+  --carrot: #ff922b;
+  --carrot-light: #ffe8cc;
+  --honey: #ffd43b;
+  --honey-light: #fff9db;
+  --mint: #51cf66;
+  --mint-light: #ebfbee;
+  --lavender: #845ef7;
+  --lavender-light: #f3f0ff;
+  --blueberry: #339af0;
+  --blueberry-light: #e7f5ff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--bg-cream) !important;
+  color: var(--text-dark) !important;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  background-image: 
+    radial-gradient(rgba(44, 37, 32, 0.03) 1px, transparent 0),
+    radial-gradient(rgba(44, 37, 32, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Custom Typography */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: 'Fredoka', cursive, sans-serif !important;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Bubbly Sticker Card Layouts */
+.kawaii-card {
+  background-color: #ffffff !important;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 24px !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--text-dark) !important;
+}
+
+.kawaii-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px 0px var(--border-dark) !important;
+}
+
+/* Color Variant Kawaii Cards */
+.kawaii-card-pink {
+  background-color: var(--strawberry-light) !important;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 24px !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  color: var(--text-dark) !important;
+}
+.kawaii-card-orange {
+  background-color: var(--carrot-light) !important;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 24px !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  color: var(--text-dark) !important;
+}
+.kawaii-card-yellow {
+  background-color: var(--honey-light) !important;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 24px !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  color: var(--text-dark) !important;
+}
+.kawaii-card-green {
+  background-color: var(--mint-light) !important;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 24px !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  color: var(--text-dark) !important;
+}
+.kawaii-card-purple {
+  background-color: var(--lavender-light) !important;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 24px !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+/* Playful Bubbly Buttons */
+.btn-bubbly {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 16px !important;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 4px 4px 0px 0px var(--border-dark) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-bubbly:hover {
+  transform: scale(1.05) translate(-1px, -1px);
+  box-shadow: 5px 5px 0px 0px var(--border-dark) !important;
+}
+
+.btn-bubbly:active {
+  transform: scale(0.95) translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px var(--border-dark) !important;
+}
+
+.btn-pink {
+  background-color: var(--strawberry) !important;
+  color: #ffffff !important;
+}
+.btn-orange {
+  background-color: var(--carrot) !important;
+  color: #ffffff !important;
+}
+.btn-yellow {
+  background-color: var(--honey) !important;
+  color: var(--text-dark) !important;
+}
+.btn-green {
+  background-color: var(--mint) !important;
+  color: #ffffff !important;
+}
+.btn-purple {
+  background-color: var(--lavender) !important;
+  color: #ffffff !important;
+}
+.btn-white {
+  background-color: #ffffff !important;
+  color: var(--text-dark) !important;
+}
+
+/* Cute Kitchen Grid Check background */
+.bg-picnic {
+  background-color: #fffdf5;
+  background-image: 
+    linear-gradient(90deg, rgba(255, 107, 107, 0.08) 50%, transparent 50%),
+    linear-gradient(rgba(255, 107, 107, 0.08) 50%, transparent 50%);
+  background-size: 24px 24px;
+  border-bottom: 3px solid var(--border-dark);
+}
+
+/* Interactive Emojis & Floating items */
+@keyframes floating-food-1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(6deg); }
+}
+
+@keyframes floating-food-2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(-8deg); }
+}
+
+.animate-float-slow-1 {
+  animation: floating-food-1 6s ease-in-out infinite;
+}
+
+.animate-float-slow-2 {
+  animation: floating-food-2 8s ease-in-out infinite;
+}
+
+/* Wobble / bounce on hover */
+@keyframes cute-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg) scale(1.03); }
+  75% { transform: rotate(3deg) scale(1.03); }
+}
+
+.hover-wobble:hover {
+  animation: cute-wobble 0.4s ease-in-out infinite alternate;
+}
+
+/* Cute bounce on hover only */
+.hover-bounce {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.hover-bounce:hover {
+  transform: translateY(-8px) scale(1.1);
+}
+
+/* Form input overrides */
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], select, textarea {
+  background-color: #ffffff !important;
+  color: var(--text-dark) !important;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 14px !important;
+  padding: 10px 14px !important;
+  font-family: 'Quicksand', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.05) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none !important;
+  border-color: var(--strawberry) !important;
+  box-shadow: 0px 0px 0px 3px rgba(255, 107, 107, 0.2) !important;
+}
+
+/* Override dark/glass elements */
+.glass {
+  background-color: #ffffff !important;
+  border: 3px solid var(--border-dark) !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  border-radius: 24px !important;
+}
+
+.glass-lab {
+  background-color: var(--lavender-light) !important;
+  border: 3px solid var(--border-dark) !important;
+  box-shadow: 6px 6px 0px 0px var(--border-dark) !important;
+  border-radius: 24px !important;
+}
+
+/* Custom list bullet */
+.grocery-bullet::before {
+  content: "✏️";
+  margin-right: 8px;
+}
+
+/* Cooking pot bubbles */
+@keyframes bubble-up {
+  0% { transform: translateY(40px) scale(0.6); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-60px) scale(1.2); opacity: 0; }
+}
+
+.cooking-bubble {
+  position: absolute;
+  bottom: 30px;
+  animation: bubble-up 2s infinite ease-out;
+}
+
+/* Custom checks / checkmarks */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--border-dark) !important;
+  border-radius: 6px !important;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  background-color: #ffffff !important;
+  transition: background-color 0.1s ease;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--strawberry) !important;
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 14px;
+}

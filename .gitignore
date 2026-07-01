@@ -1,0 +1,16 @@
+# Python dependencies & environment
+backend/venv/
+backend/__pycache__/
+backend/*.db
+backend/*.db-journal
+backend/.env
+**/__pycache__/
+*.pyc
+
+# Node dependencies & builds
+frontend/node_modules/
+frontend/dist/
+
+# System files
+.DS_Store
+Thumbs.db

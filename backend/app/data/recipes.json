@@ -1,0 +1,308 @@
+[
+  {
+    "name": "Spanish Tomato Rice",
+    "country": "Spain",
+    "cuisine_type": "Mediterranean",
+    "ingredients": [
+      {"name": "rice", "quantity": "1 cup"},
+      {"name": "tomato", "quantity": "2 medium, diced"},
+      {"name": "onion", "quantity": "1 small, chopped"},
+      {"name": "garlic", "quantity": "2 cloves, minced"},
+      {"name": "capsicum", "quantity": "1/2 cup, chopped"},
+      {"name": "olive oil", "quantity": "2 tbsp"},
+      {"name": "paprika", "quantity": "1 tsp"},
+      {"name": "salt", "quantity": "1/2 tsp"}
+    ],
+    "steps": [
+      "Sauté chopped onions, garlic, and capsicum in olive oil until soft.",
+      "Add diced tomatoes, paprika, and cook for 5 minutes until tomatoes break down.",
+      "Stir in the rice, coating it with the tomato mixture.",
+      "Add water or broth, bring to a boil, then cover and simmer on low for 15-20 minutes until rice is cooked."
+    ],
+    "time": 30
+  },
+  {
+    "name": "Korean Egg Fried Rice",
+    "country": "South Korea",
+    "cuisine_type": "East Asian",
+    "ingredients": [
+      {"name": "rice", "quantity": "2 cups, cooked cold"},
+      {"name": "egg", "quantity": "2 large"},
+      {"name": "onion", "quantity": "1/2 medium, chopped"},
+      {"name": "garlic", "quantity": "1 clove, minced"},
+      {"name": "green onion", "quantity": "2 stalks, chopped"},
+      {"name": "soy sauce", "quantity": "1 tbsp"},
+      {"name": "sesame oil", "quantity": "1 tsp"},
+      {"name": "salt", "quantity": "1/4 tsp"}
+    ],
+    "steps": [
+      "Beat eggs in a bowl with a pinch of salt.",
+      "Heat a pan with oil, scramble the eggs until 80% cooked, then remove and set aside.",
+      "Sauté chopped green onions, onions, and garlic in the same pan.",
+      "Add cold cooked rice and stir-fry, breaking up any clumps.",
+      "Drizzle soy sauce around the edges of the pan, stir-fry to combine.",
+      "Return the scrambled eggs to the pan, toss together, and finish with sesame oil."
+    ],
+    "time": 15
+  },
+  {
+    "name": "Chinese Tomato Egg Rice",
+    "country": "China",
+    "cuisine_type": "East Asian",
+    "ingredients": [
+      {"name": "rice", "quantity": "2 cups, cooked warm"},
+      {"name": "egg", "quantity": "3 large"},
+      {"name": "tomato", "quantity": "2 large, wedged"},
+      {"name": "garlic", "quantity": "2 cloves, sliced"},
+      {"name": "green onion", "quantity": "1 stalk, chopped"},
+      {"name": "soy sauce", "quantity": "1 tsp"},
+      {"name": "sugar", "quantity": "1/2 tsp"},
+      {"name": "sesame oil", "quantity": "1/2 tsp"}
+    ],
+    "steps": [
+      "Beat eggs and scramble in a hot pan with oil until soft-curd, then remove.",
+      "In the same pan, cook chopped garlic and green onions, then add wedged tomatoes.",
+      "Cook tomatoes down until they form a juicy sauce, adding sugar and soy sauce.",
+      "Add the eggs back into the tomato sauce, mixing gently.",
+      "Serve the hot tomato-egg stir fry over a bed of warm steamed rice."
+    ],
+    "time": 20
+  },
+  {
+    "name": "Indian Egg Bhurji Rice",
+    "country": "India",
+    "cuisine_type": "South Asian",
+    "ingredients": [
+      {"name": "rice", "quantity": "2 cups, cooked"},
+      {"name": "egg", "quantity": "3 large"},
+      {"name": "onion", "quantity": "1 medium, finely chopped"},
+      {"name": "tomato", "quantity": "1 medium, chopped"},
+      {"name": "garlic", "quantity": "2 cloves, minced"},
+      {"name": "capsicum", "quantity": "1/4 cup, diced"},
+      {"name": "chili", "quantity": "1 green chili, chopped"},
+      {"name": "turmeric", "quantity": "1/4 tsp"},
+      {"name": "cumin", "quantity": "1/2 tsp seeds"},
+      {"name": "coriander", "quantity": "1/2 tsp powder"}
+    ],
+    "steps": [
+      "Sauté finely chopped onion, garlic, and green chili in oil until light brown.",
+      "Add chopped capsicum and tomatoes, cooking until soft.",
+      "Stir in turmeric, cumin, and coriander powder.",
+      "Whisk eggs and pour them directly into the pan, scrambling on medium heat.",
+      "Fold in cooked rice, mix well until heated through, and garnish with fresh coriander."
+    ],
+    "time": 20
+  },
+  {
+    "name": "Italian Risotto al Pomodoro",
+    "country": "Italy",
+    "cuisine_type": "European",
+    "ingredients": [
+      {"name": "rice", "quantity": "1 cup, Arborio"},
+      {"name": "tomato", "quantity": "1 cup, pureed"},
+      {"name": "onion", "quantity": "1/2 medium, chopped"},
+      {"name": "garlic", "quantity": "1 clove, minced"},
+      {"name": "parmesan", "quantity": "1/4 cup, grated"},
+      {"name": "olive oil", "quantity": "1 tbsp"},
+      {"name": "butter", "quantity": "1 tbsp"},
+      {"name": "basil", "quantity": "4 leaves, torn"}
+    ],
+    "steps": [
+      "Heat olive oil and butter, and sauté finely chopped onion and garlic.",
+      "Add rice and toast for 2 minutes until translucent.",
+      "Slowly add pureed tomatoes and warm broth, one ladle at a time, stirring constantly.",
+      "Allow the rice to absorb liquid before adding more, cooking for 18 minutes.",
+      "Stir in parmesan, fresh basil, and a touch of butter for a creamy finish."
+    ],
+    "time": 35
+  },
+  {
+    "name": "Mexican Tomato Salsa & Rice Bowl",
+    "country": "Mexico",
+    "cuisine_type": "Latin American",
+    "ingredients": [
+      {"name": "rice", "quantity": "1 cup"},
+      {"name": "tomato", "quantity": "2 large, diced"},
+      {"name": "onion", "quantity": "1/2 medium, diced"},
+      {"name": "garlic", "quantity": "1 clove, minced"},
+      {"name": "capsicum", "quantity": "1/2 cup, diced"},
+      {"name": "lime", "quantity": "1/2 lime, juiced"},
+      {"name": "coriander", "quantity": "2 tbsp, chopped"},
+      {"name": "cumin", "quantity": "1/2 tsp"},
+      {"name": "chili powder", "quantity": "1/4 tsp"}
+    ],
+    "steps": [
+      "Cook rice with tomato paste, garlic, and cumin.",
+      "Make fresh salsa: dice tomatoes, onions, capsicum, and coriander, then mix with lime juice and salt.",
+      "Sauté black beans or extra capsicum if desired.",
+      "Assemble the bowl with a base of Mexican rice, topped with fresh tomato salsa."
+    ],
+    "time": 25
+  },
+  {
+    "name": "Spanish Tortilla",
+    "country": "Spain",
+    "cuisine_type": "Mediterranean",
+    "ingredients": [
+      {"name": "egg", "quantity": "5 large"},
+      {"name": "onion", "quantity": "1 medium, sliced"},
+      {"name": "potato", "quantity": "2 large, thinly sliced"},
+      {"name": "olive oil", "quantity": "1/2 cup (for frying)"},
+      {"name": "salt", "quantity": "1/2 tsp"}
+    ],
+    "steps": [
+      "Peel and thinly slice potatoes and onions.",
+      "Gently fry potatoes and onions in a generous amount of olive oil until soft, not browned.",
+      "Drain the potatoes and onions and mix them with beaten eggs in a bowl.",
+      "Pour the mixture back into a hot pan with a little oil and cook until the bottom sets.",
+      "Carefully flip using a plate, and cook the other side until golden and cooked through."
+    ],
+    "time": 30
+  },
+  {
+    "name": "Japanese Tamago Kake Gohan",
+    "country": "Japan",
+    "cuisine_type": "East Asian",
+    "ingredients": [
+      {"name": "rice", "quantity": "1 bowl, hot freshly cooked"},
+      {"name": "egg", "quantity": "1 fresh large"},
+      {"name": "soy sauce", "quantity": "1 tsp"},
+      {"name": "green onion", "quantity": "1 tsp, chopped"},
+      {"name": "sesame oil", "quantity": "1/4 tsp"}
+    ],
+    "steps": [
+      "Prepare a bowl of steaming hot freshly cooked rice.",
+      "Crack a fresh, high-quality egg directly over the hot rice.",
+      "Add a splash of soy sauce and a few drops of sesame oil.",
+      "Whip vigorously with chopsticks until the egg becomes frothy and coats every grain of rice.",
+      "Garnish with chopped green onions."
+    ],
+    "time": 5
+  },
+  {
+    "name": "Italian Tomato Bruschetta",
+    "country": "Italy",
+    "cuisine_type": "European",
+    "ingredients": [
+      {"name": "tomato", "quantity": "3 medium, diced"},
+      {"name": "garlic", "quantity": "2 cloves, minced"},
+      {"name": "olive oil", "quantity": "2 tbsp"},
+      {"name": "bread", "quantity": "4 thick slices"},
+      {"name": "basil", "quantity": "5 leaves, chopped"},
+      {"name": "salt", "quantity": "1/4 tsp"}
+    ],
+    "steps": [
+      "Dice tomatoes and mix with minced garlic, chopped basil, olive oil, and salt. Let sit to combine flavors.",
+      "Slice Italian bread and grill or toast until crunchy.",
+      "Rub a cut garlic clove over the toasted bread slices.",
+      "Spoon the marinated tomato mixture generously over the toasted bread."
+    ],
+    "time": 15
+  },
+  {
+    "name": "Indian Jeera Rice",
+    "country": "India",
+    "cuisine_type": "South Asian",
+    "ingredients": [
+      {"name": "rice", "quantity": "1 cup, Basmati"},
+      {"name": "cumin", "quantity": "1 tbsp seeds"},
+      {"name": "ghee", "quantity": "2 tbsp"},
+      {"name": "onion", "quantity": "1/2 medium, sliced"},
+      {"name": "garlic", "quantity": "1 clove, minced"},
+      {"name": "salt", "quantity": "1/2 tsp"}
+    ],
+    "steps": [
+      "Wash and soak basmati rice for 20 minutes.",
+      "Heat ghee (or oil) in a pot, add cumin seeds, and let them sizzle.",
+      "Add sliced onion and minced garlic, sautéing until soft.",
+      "Add the drained rice and sauté for 1 minute.",
+      "Add water and salt, bring to a boil, then cover and cook on low heat for 12 minutes."
+    ],
+    "time": 25
+  },
+  {
+    "name": "Middle Eastern Shakshuka",
+    "country": "Tunisia",
+    "cuisine_type": "Middle Eastern",
+    "ingredients": [
+      {"name": "egg", "quantity": "4 large"},
+      {"name": "tomato", "quantity": "1 can (400g) diced or 4 ripe chopped"},
+      {"name": "onion", "quantity": "1 medium, chopped"},
+      {"name": "garlic", "quantity": "3 cloves, minced"},
+      {"name": "capsicum", "quantity": "1 medium, chopped"},
+      {"name": "olive oil", "quantity": "2 tbsp"},
+      {"name": "cumin", "quantity": "1 tsp"},
+      {"name": "paprika", "quantity": "1 tsp"},
+      {"name": "salt", "quantity": "1/2 tsp"}
+    ],
+    "steps": [
+      "Sauté chopped onions, garlic, and capsicum in olive oil in a skillet until soft.",
+      "Add diced tomatoes, cumin, paprika, salt, and cook until it forms a thick sauce (about 10 minutes).",
+      "Use a spoon to make small wells in the sauce and crack eggs directly into them.",
+      "Cover the skillet and cook on low-medium heat for 5-8 minutes until egg whites are set but yolks are runny."
+    ],
+    "time": 25
+  },
+  {
+    "name": "Classic Tomato Omelette",
+    "country": "France",
+    "cuisine_type": "European",
+    "ingredients": [
+      {"name": "egg", "quantity": "3 large"},
+      {"name": "tomato", "quantity": "1/2 cup, finely chopped"},
+      {"name": "onion", "quantity": "1/4 cup, finely chopped"},
+      {"name": "capsicum", "quantity": "1/4 cup, finely chopped"},
+      {"name": "butter", "quantity": "1 tbsp"},
+      {"name": "salt", "quantity": "1/4 tsp"},
+      {"name": "black pepper", "quantity": "1/4 tsp"}
+    ],
+    "steps": [
+      "Whisk eggs with salt and pepper in a bowl.",
+      "Finely chop tomato, onion, and capsicum.",
+      "Melt butter in a pan, pour in the eggs, and cook until they start to set.",
+      "Sprinkle the chopped vegetables over one half of the omelette.",
+      "Fold the omelette in half and cook for 1 more minute before serving."
+    ],
+    "time": 10
+  },
+  {
+    "name": "Sautéed Garlic Tomatoes",
+    "country": "Italy",
+    "cuisine_type": "European",
+    "ingredients": [
+      {"name": "tomato", "quantity": "250g, cherry or sliced"},
+      {"name": "garlic", "quantity": "3 cloves, sliced"},
+      {"name": "olive oil", "quantity": "2 tbsp"},
+      {"name": "salt", "quantity": "1/4 tsp"},
+      {"name": "black pepper", "quantity": "1/4 tsp"}
+    ],
+    "steps": [
+      "Halve cherry tomatoes or thick-slice regular tomatoes.",
+      "Sauté sliced garlic in olive oil on medium heat until fragrant (do not burn).",
+      "Add the tomatoes, toss to coat, and cook for 3-5 minutes until soft and blistered.",
+      "Season with salt and fresh cracked pepper, and serve warm."
+    ],
+    "time": 8
+  },
+  {
+    "name": "Garlic Butter Potato Hash",
+    "country": "United States",
+    "cuisine_type": "American",
+    "ingredients": [
+      {"name": "potato", "quantity": "2 large"},
+      {"name": "garlic", "quantity": "4 cloves, minced"},
+      {"name": "onion", "quantity": "1/2 medium, chopped"},
+      {"name": "butter", "quantity": "2 tbsp"},
+      {"name": "salt", "quantity": "1/2 tsp"},
+      {"name": "black pepper", "quantity": "1/4 tsp"}
+    ],
+    "steps": [
+      "Peel potatoes and cut into small 1/2-inch cubes.",
+      "Melt butter in a skillet, add chopped onion and potato cubes, and cook on medium-high.",
+      "Stir occasionally, letting the potato edges turn golden and crispy (about 15 minutes).",
+      "Add minced garlic in the final 3 minutes of cooking, tossing well.",
+      "Season with salt and black pepper."
+    ],
+    "time": 20
+  }
+]
