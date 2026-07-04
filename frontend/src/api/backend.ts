@@ -219,6 +219,36 @@ export const api = {
     },
     deleteCustom: async (id: number): Promise<void> => {
       return apiFetch(`/recipes/custom/${id}`, { method: "DELETE" });
+    },
+    search: async (query: string): Promise<RecipeItem[]> => {
+      const data = await apiFetch<any[]>(`/recipes/search?q=${encodeURIComponent(query)}`);
+      return data.map(recipe => ({
+        id: recipe.id,
+        user_id: recipe.user_id,
+        name: recipe.name,
+        country: recipe.country,
+        cuisine_type: recipe.cuisine_type,
+        ingredients: typeof recipe.ingredients === "string" ? JSON.parse(recipe.ingredients) : recipe.ingredients,
+        steps: typeof recipe.steps === "string" ? JSON.parse(recipe.steps) : recipe.steps,
+        time: recipe.time,
+        match_score: recipe.match_score
+      }));
+    },
+    searchAI: async (query: string): Promise<RecipeItem> => {
+      const data = await apiFetch<any>("/recipes/search/ai", {
+        method: "POST",
+        body: JSON.stringify({ query })
+      });
+      return {
+        id: data.id,
+        user_id: data.user_id,
+        name: data.name,
+        country: data.country,
+        cuisine_type: data.cuisine_type,
+        ingredients: typeof data.ingredients === "string" ? JSON.parse(data.ingredients) : data.ingredients,
+        steps: typeof data.steps === "string" ? JSON.parse(data.steps) : data.steps,
+        time: data.time
+      };
     }
   }
 };

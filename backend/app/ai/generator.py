@@ -250,6 +250,135 @@ class RecipeGenerator:
             return cls._mock_expiry_intelligence(expiring_ingredients)
 
     @classmethod
+    def generate_recipe_by_name(cls, recipe_name: str, preferences: dict) -> dict:
+        """
+        Generates a specific recipe card by its name, conforming to user preferences.
+        """
+        diet = preferences.get("diet", "None")
+        allergies = preferences.get("allergies", "None")
+        spicy_level = preferences.get("spicy_level", "Medium")
+
+        prompt = f"""
+        You are a Michelin-starred chef.
+        Create an authentic, detailed recipe card for the dish: '{recipe_name}'.
+
+        User Preferences:
+        - Dietary constraints: {diet}
+        - Allergies to avoid: {allergies}
+        - Desired spiciness: {spicy_level}
+
+        Instructions:
+        1. If the recipe violates the dietary constraints or contains allergies, modify the recipe to adapt it (e.g. use egg substitutes, make it vegetarian/vegan-friendly, etc.).
+        2. Provide exact ingredients with realistic measurements and quantities.
+        3. Provide clear step-by-step preparation and cooking instructions.
+        4. Include a detailed description of the flavors and culinary origins.
+
+        Respond ONLY with a JSON object. Do not include markdown code block formatting. Follow this JSON schema exactly:
+        {{
+            "name": "Recipe Name",
+            "country": "Country of origin (e.g., 'Italy', 'India')",
+            "cuisine_type": "Cuisine type (e.g., 'Italian', 'Indian')",
+            "ingredients": [
+                {{"name": "ingredient name", "quantity": "realistic measurement, e.g., '200g', '2 large', '1 tbsp'"}}
+            ],
+            "steps": [
+                "1. Preparation step...",
+                "2. Cooking step..."
+            ],
+            "time": 30, // cooking time in minutes
+            "flavor_description": "A detailed description of the flavor profile, taste, and culinary background."
+        }}
+        """
+
+        if not API_KEY:
+            return {
+                "name": recipe_name,
+                "country": "International",
+                "cuisine_type": "Fusion",
+                "ingredients": [
+                    {"name": "ingredients for " + recipe_name, "quantity": "some"}
+                ],
+                "steps": [
+                    f"1. Prepare all ingredients required for cooking {recipe_name}.",
+                    f"2. Simmer and cook {recipe_name} with selected spices.",
+                    "3. Garnish and serve warm."
+                ],
+                "time": 25,
+                "flavor_description": f"A cozy mock representation of {recipe_name} adapted for your tastes."
+            }
+
+        try:
+            return cls._generate_content_with_fallback(prompt, json_mode=True)
+        except Exception as e:
+            logger.error(f"Error generating recipe by name: {e}")
+            raise e
+
+    @classmethod
+    def search_web_recipe(cls, recipe_name: str, preferences: dict) -> dict:
+        """
+        Searches the web/knowledge base for a real recipe matching the specified name.
+        """
+        diet = preferences.get("diet", "None")
+        allergies = preferences.get("allergies", "None")
+        spicy_level = preferences.get("spicy_level", "Medium")
+
+        prompt = f"""
+        You are a search engine for real, authentic recipes from around the world.
+        Search the web and retrieve the exact, authentic recipe for: '{recipe_name}'.
+
+        User Preferences:
+        - Dietary constraints: {diet}
+        - Allergies to avoid: {allergies}
+        - Desired spiciness: {spicy_level}
+
+        Instructions:
+        1. Find a real, authentic recipe for '{recipe_name}' that exists on major food blogs or traditional cuisines.
+        2. If the authentic recipe contains ingredients violating the user's dietary preferences or allergies, provide suitable modifications, but keep the core recipe authentic.
+        3. Retrieve/format the recipe details including cooking time, cuisine country, realistic measurements for ingredients, and step-by-step instructions.
+
+        Respond ONLY with a JSON object. Do not include markdown code block formatting. Follow this JSON schema exactly:
+        {{
+            "name": "Authentic Recipe Name",
+            "country": "Country of origin",
+            "cuisine_type": "Cuisine type",
+            "ingredients": [
+                {{"name": "ingredient name", "quantity": "realistic measurement, e.g., '200g', '1 tbsp'"}}
+            ],
+            "steps": [
+                "1. Preparation step...",
+                "2. Cooking step..."
+            ],
+            "time": 30, // cooking time in minutes
+            "flavor_description": "A description of the authentic taste profile and culinary background."
+        }}
+        """
+
+        if not API_KEY:
+            return {
+                "name": recipe_name + " (Authentic)",
+                "country": "India",
+                "cuisine_type": "Traditional",
+                "ingredients": [
+                    {"name": "main ingredient for " + recipe_name, "quantity": "1 cup"},
+                    {"name": "spices", "quantity": "to taste"},
+                    {"name": "oil", "quantity": "2 tbsp"}
+                ],
+                "steps": [
+                    f"1. Prepare and clean the ingredients for {recipe_name}.",
+                    f"2. Heat oil in a pan, roast seasonings and main ingredients.",
+                    f"3. Simmer until fully cooked and serve {recipe_name} hot."
+                ],
+                "time": 25,
+                "flavor_description": f"A traditional and authentic preparation of {recipe_name}."
+            }
+
+        try:
+            return cls._generate_content_with_fallback(prompt, json_mode=True)
+        except Exception as e:
+            logger.error(f"Error searching web recipe: {e}")
+            raise e
+
+    @classmethod
     def analyze_nutrition(cls, recipe_name: str, ingredients_list: list[str]) -> dict:
         """
         Analyzes the nutrition profile of a given list of ingredients and recipe.

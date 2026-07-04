@@ -475,3 +475,175 @@ def delete_custom_recipe(recipe_id: int, current_user: User = Depends(get_curren
     db.delete(recipe)
     db.commit()
     return
+
+class AISearchRequest(BaseModel):
+    query: str
+
+@router.get("/search")
+def search_recipes(q: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    q_clean = q.strip().lower()
+    if not q_clean:
+        return []
+        
+    # Get user's recipes & global recipes
+    recipes = db.query(Recipe).filter((Recipe.user_id == None) | (Recipe.user_id == current_user.id)).all()
+    
+    # Get search query embedding for semantic search
+    query_embedding = embedding_engine.get_embedding(q_clean)
+    
+    scored_recipes = []
+    for recipe in recipes:
+        score = 0.0
+        name_lower = recipe.name.lower()
+        cuisine_lower = recipe.cuisine_type.lower() if recipe.cuisine_type else ""
+        country_lower = recipe.country.lower() if recipe.country else ""
+        
+        # 1. Name matches
+        if q_clean == name_lower:
+            score = 100.0
+        elif name_lower.startswith(q_clean):
+            score = 90.0
+        elif q_clean in name_lower:
+            score = 80.0
+        # 2. Cuisine/Country matches
+        elif q_clean == cuisine_lower or q_clean == country_lower:
+            score = 75.0
+        elif q_clean in cuisine_lower or q_clean in country_lower:
+            score = 65.0
+        else:
+            # 3. Ingredient matches
+            ingredient_match = False
+            for ing in recipe.ingredients_list:
+                if q_clean in ing.get("name", "").lower():
+                    ingredient_match = True
+                    break
+            if ingredient_match:
+                score = 60.0
+            else:
+                # 4. Semantic similarity fallback
+                if recipe.embedding:
+                    recipe_emb = json.loads(recipe.embedding)
+                    cosine_score = embedding_engine.calculate_similarity(query_embedding, recipe_emb)
+                    if cosine_score > 0.25:
+                        score = cosine_score * 50.0  # Scale semantic similarity to max 50
+                        
+        if score > 0.0:
+            scored_recipes.append({
+                "id": recipe.id,
+                "user_id": recipe.user_id,
+                "name": recipe.name,
+                "country": recipe.country,
+                "cuisine_type": recipe.cuisine_type,
+                "ingredients": recipe.ingredients_list,
+                "steps": recipe.steps_list,
+                "time": recipe.time,
+                "match_score": round(score, 1)
+            })
+            
+    # If we found an exact/strong match in our database (score >= 90.0), return it immediately!
+    if scored_recipes and any(r["match_score"] >= 90.0 for r in scored_recipes):
+        scored_recipes.sort(key=lambda x: -x["match_score"])
+        return scored_recipes[:10]
+
+    # Otherwise, search the web using Gemini AI for this specific recipe
+    try:
+        user_pref = json.loads(current_user.preferences) if current_user.preferences else {}
+    except:
+        user_pref = {}
+        
+    try:
+        generated = RecipeGenerator.search_web_recipe(q.strip(), user_pref)
+        
+        # Save the web-retrieved recipe to the database under user creations
+        ingredients_text = " ".join([ing.get("name", "").strip().lower() for ing in generated.get("ingredients", [])])
+        vector = embedding_engine.get_embedding(ingredients_text)
+        vector_json = json.dumps(vector)
+        
+        ingredients_data = [{"name": ing.get("name", "").strip().lower(), "quantity": ing.get("quantity", "").strip()} for ing in generated.get("ingredients", [])]
+        
+        new_recipe = Recipe(
+            user_id=current_user.id,
+            name=generated.get("name", q.strip()).strip(),
+            country=generated.get("country", "Unknown").strip(),
+            cuisine_type=generated.get("cuisine_type", "Fusion").strip(),
+            ingredients=json.dumps(ingredients_data),
+            steps=json.dumps([step.strip() for step in generated.get("steps", []) if step.strip()]),
+            time=generated.get("time", 30),
+            embedding=vector_json
+        )
+        
+        db.add(new_recipe)
+        db.commit()
+        db.refresh(new_recipe)
+        
+        # Fetch wiki image if available
+        wiki_img = get_wikipedia_image_url(new_recipe.name)
+        
+        web_recipe_card = {
+            "id": new_recipe.id,
+            "user_id": new_recipe.user_id,
+            "name": new_recipe.name,
+            "country": new_recipe.country,
+            "cuisine_type": new_recipe.cuisine_type,
+            "image_url": wiki_img,
+            "ingredients": new_recipe.ingredients_list,
+            "steps": new_recipe.steps_list,
+            "time": new_recipe.time,
+            "match_score": 100.0
+        }
+        scored_recipes.insert(0, web_recipe_card)
+    except Exception as e:
+        logger.error(f"Failed to retrieve recipe '{q}' from web: {e}")
+
+    # Sort and return
+    scored_recipes.sort(key=lambda x: -x["match_score"])
+    return scored_recipes[:10]
+
+@router.post("/search/ai")
+def generate_search_recipe_ai(req: AISearchRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    q = req.query.strip()
+    if not q:
+        raise HTTPException(status_code=400, detail="Search query cannot be empty")
+        
+    try:
+        user_pref = json.loads(current_user.preferences)
+    except:
+        user_pref = {}
+        
+    generated = RecipeGenerator.generate_recipe_by_name(q, user_pref)
+    
+    # Save the generated recipe as a custom creation of the user
+    # Standardize ingredients names for search
+    ingredients_text = " ".join([ing.get("name", "").strip().lower() for ing in generated.get("ingredients", [])])
+    
+    # Calculate embedding
+    vector = embedding_engine.get_embedding(ingredients_text)
+    vector_json = json.dumps(vector)
+    
+    ingredients_data = [{"name": ing.get("name", "").strip().lower(), "quantity": ing.get("quantity", "").strip()} for ing in generated.get("ingredients", [])]
+    
+    new_recipe = Recipe(
+        user_id=current_user.id,
+        name=generated.get("name", q).strip(),
+        country=generated.get("country", "Unknown").strip(),
+        cuisine_type=generated.get("cuisine_type", "Fusion").strip(),
+        ingredients=json.dumps(ingredients_data),
+        steps=json.dumps([step.strip() for step in generated.get("steps", []) if step.strip()]),
+        time=generated.get("time", 30),
+        embedding=vector_json
+    )
+    
+    db.add(new_recipe)
+    db.commit()
+    db.refresh(new_recipe)
+    
+    return {
+        "id": new_recipe.id,
+        "user_id": new_recipe.user_id,
+        "name": new_recipe.name,
+        "country": new_recipe.country,
+        "cuisine_type": new_recipe.cuisine_type,
+        "ingredients": new_recipe.ingredients_list,
+        "steps": new_recipe.steps_list,
+        "time": new_recipe.time
+    }

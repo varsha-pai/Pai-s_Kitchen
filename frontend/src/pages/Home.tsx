@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChefHat, BookOpen, AlertTriangle, Sparkles, Loader2, Play, Globe, Plus, Trash2, X } from "lucide-react";
+import { ChefHat, BookOpen, AlertTriangle, Sparkles, Loader2, Play, Globe, Plus, Trash2, X, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { api } from "../api/backend";
@@ -20,7 +20,13 @@ export default function Home() {
   const [errorRecipes, setErrorRecipes] = useState("");
   
   const [savedRecipes, setSavedRecipes] = useState<SavedRecipe[]>([]);
-  const [activeTab, setActiveTab] = useState<"cook" | "saved">("cook");
+  const [activeTab, setActiveTab] = useState<"cook" | "saved" | "search">("cook");
+  
+  const [globalSearchQuery, setGlobalSearchQuery] = useState("");
+  const [globalSearchResults, setGlobalSearchResults] = useState<RecipeItem[]>([]);
+  const [loadingGlobalSearch, setLoadingGlobalSearch] = useState(false);
+  const [generatingGlobalSearchAI, setGeneratingGlobalSearchAI] = useState(false);
+  const [globalSearchError, setGlobalSearchError] = useState("");
   
   const [expiryInsights, setExpiryInsights] = useState<ExpiryInsight[]>([]);
 
@@ -84,6 +90,39 @@ export default function Home() {
       setCustomRecipes(data);
     } catch (err) {
       console.error("Failed to load custom recipes", err);
+    }
+  };
+
+  const handleGlobalSearch = async () => {
+    const q = globalSearchQuery.trim();
+    if (!q) return;
+    setLoadingGlobalSearch(true);
+    setGlobalSearchError("");
+    try {
+      const data = await api.recipes.search(q);
+      setGlobalSearchResults(data);
+    } catch (err: any) {
+      console.error(err);
+      setGlobalSearchError(err.message || "Failed to search recipes");
+    } finally {
+      setLoadingGlobalSearch(false);
+    }
+  };
+
+  const handleGlobalSearchAI = async () => {
+    const q = globalSearchQuery.trim();
+    if (!q) return;
+    setGeneratingGlobalSearchAI(true);
+    setGlobalSearchError("");
+    try {
+      const newRecipe = await api.recipes.searchAI(q);
+      setGlobalSearchResults(prev => [newRecipe, ...prev]);
+      fetchCustomRecipes();
+    } catch (err: any) {
+      console.error(err);
+      setGlobalSearchError(err.message || "Failed to generate recipe using AI");
+    } finally {
+      setGeneratingGlobalSearchAI(false);
     }
   };
 
@@ -239,8 +278,8 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Tab switcher: Cook vs Favorites */}
-        <div className="flex gap-3 justify-center">
+        {/* Tab switcher: Cook vs Search vs Favorites */}
+        <div className="flex gap-3 justify-center flex-wrap">
           <button
             onClick={() => setActiveTab("cook")}
             className={`btn-bubbly py-2.5 px-4 cursor-pointer ${
@@ -250,6 +289,16 @@ export default function Home() {
             }`}
           >
             <Play className="h-4 w-4 shrink-0" /> Cooking Board
+          </button>
+          <button
+            onClick={() => setActiveTab("search")}
+            className={`btn-bubbly py-2.5 px-4 cursor-pointer ${
+              activeTab === "search"
+                ? "btn-orange shadow-[3px_3px_0px_0px_var(--border-dark)] scale-102"
+                : "btn-white shadow-[2px_2px_0px_0px_var(--border-dark)]"
+            }`}
+          >
+            <Search className="h-4 w-4 shrink-0" /> Search World
           </button>
           <button
             onClick={() => setActiveTab("saved")}
@@ -479,6 +528,129 @@ export default function Home() {
                     )}
                   </div>
                 )}
+              </motion.div>
+            ) : activeTab === "search" ? (
+              <motion.div
+                key="search-board"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6"
+              >
+                {/* Search Bar */}
+                <div className="kawaii-card p-4 bg-white flex items-center gap-3">
+                  <input
+                    type="text"
+                    placeholder="Search any recipe (e.g. Shakshuka, Pasta, Chocolate Cake)..."
+                    value={globalSearchQuery}
+                    onChange={(e) => setGlobalSearchQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleGlobalSearch()}
+                    className="flex-1 text-sm"
+                  />
+                  <button
+                    onClick={handleGlobalSearch}
+                    disabled={loadingGlobalSearch}
+                    className="btn-bubbly btn-orange py-2.5 px-5 cursor-pointer text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 disabled:opacity-50"
+                  >
+                    {loadingGlobalSearch ? (
+                      <Loader2 className="h-4 w-4 animate-spin text-white" />
+                    ) : (
+                      <Search className="h-4 w-4 text-white" />
+                    )}
+                    <span>Search</span>
+                  </button>
+                </div>
+
+                {/* Error Banner */}
+                {globalSearchError && (
+                  <div className="p-4 rounded-xl border-3 border-[var(--border-dark)] bg-red-100 text-red-700 text-sm font-bold">
+                    ⚠️ {globalSearchError}
+                  </div>
+                )}
+
+                {/* Results display */}
+                <div className="space-y-4">
+                  {loadingGlobalSearch && (
+                    <div className="space-y-4">
+                      {[1, 2].map(n => (
+                        <div key={n} className="kawaii-card w-full h-48 bg-white flex items-center justify-center">
+                          <div className="flex flex-col items-center gap-2.5">
+                            <Loader2 className="h-8 w-8 animate-spin text-[var(--carrot)]" />
+                            <span className="text-xs text-gray-500 font-extrabold uppercase tracking-wider">
+                              Searching database...
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {generatingGlobalSearchAI && (
+                    <div className="kawaii-card-purple w-full h-48 flex items-center justify-center animate-pulse">
+                      <div className="flex flex-col items-center gap-2.5">
+                         <Loader2 className="h-8 w-8 animate-spin text-[var(--lavender)]" />
+                         <span className="text-xs text-gray-500 font-extrabold uppercase tracking-wider">
+                           AI Chef is cooking up the recipe...
+                         </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {!loadingGlobalSearch && !generatingGlobalSearchAI && (
+                    <>
+                      {globalSearchResults.length > 0 ? (
+                        globalSearchResults.map(recipe => {
+                          const savedItem = savedRecipes.find(sr => sr.recipe_name === recipe.name);
+                          return (
+                            <RecipeCard
+                              key={recipe.id || recipe.name}
+                              recipe={recipe}
+                              mode="world"
+                              isSaved={!!savedItem}
+                              savedId={savedItem?.id}
+                              onSaveToggle={fetchSavedRecipes}
+                              onDeleteCustom={recipe.id ? (id) => {
+                                setGlobalSearchResults(prev => prev.filter(r => r.id !== id));
+                                fetchCustomRecipes();
+                              } : undefined}
+                            />
+                          );
+                        })
+                      ) : (
+                        <div className="kawaii-card py-16 px-6 text-center bg-white flex flex-col items-center justify-center">
+                          {globalSearchQuery.trim() ? (
+                            <>
+                              <span className="text-6xl hover-bounce mb-4 select-none">🧐</span>
+                              <h4 className="font-display font-extrabold text-lg text-[var(--text-dark)]">
+                                No recipes found in database
+                              </h4>
+                              <p className="text-xs text-gray-500 max-w-sm mt-1.5 font-bold leading-relaxed mb-6">
+                                We couldn't find "{globalSearchQuery}" in our recipe vault. Let our AI Chef craft a custom recipe card for you!
+                              </p>
+                              <button
+                                onClick={handleGlobalSearchAI}
+                                className="btn-bubbly btn-purple py-3 px-6 cursor-pointer"
+                              >
+                                <Sparkles className="h-4 w-4 text-white" />
+                                <span>Generate with AI Chef</span>
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <span className="text-6xl hover-bounce mb-4 select-none">🌐</span>
+                              <h4 className="font-display font-extrabold text-lg text-[var(--text-dark)]">
+                                Search World Recipes
+                              </h4>
+                              <p className="text-xs text-gray-500 max-w-sm mt-1.5 font-bold leading-relaxed">
+                                Enter a recipe name or cuisine keywords to search the global repository!
+                              </p>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </motion.div>
             ) : (
               // Saved Recipes tab (My Recipe Book / Cookbook)
